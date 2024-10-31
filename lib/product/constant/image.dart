@@ -3,15 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum AppIcons {
-  formOutline('form_outline'),
-  printOutline('print_outline'),
-  arrowLeft('arrow_left');
+enum AppImages {
+  notFound('not_found'),
+  error('error');
 
   final String value;
-  const AppIcons(this.value);
+  const AppImages(this.value);
 
-  String get toSvg => "assets/icons/$value.svg";
+  String get toSvg => "assets/images/$value.svg";
   SvgPicture toSvgImg(
     Color? color,
     double width,
@@ -24,7 +23,7 @@ enum AppIcons {
         height: height,
       );
 
-  String get toPng => "assets/icons/$value.png";
+  String get toPng => "assets/images/$value.png";
   Image toPngImg(
     double width,
     double height,
