@@ -1,3 +1,4 @@
+import 'package:bluetoothpinterapp/feature/print_out/bloc/cubit.dart';
 import 'package:bluetoothpinterapp/feature/printers/bloc/cubit.dart';
 import 'package:bluetoothpinterapp/feature/splash/splash_view.dart';
 import 'package:bluetoothpinterapp/product/initilalize/app_start.dart';
@@ -19,6 +20,9 @@ class AppView extends StatelessWidget {
       providers: [
         BlocProvider<PrintersCubit>(
           create: (BuildContext context) => PrintersCubit(),
+        ),
+        BlocProvider<PrintOutBloc>(
+          create: (BuildContext context) => PrintOutBloc(),
         ),
       ],
       child: MaterialApp(

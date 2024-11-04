@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 enum AppLogoConstants {
-  appLogoPrimaryColor('logo');
+  appLogoPrimaryColor('logo'),
+  appLogoSecondPrimaryColor('logo_second');
 
   final String value;
 
