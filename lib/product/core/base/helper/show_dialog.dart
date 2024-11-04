@@ -1,14 +1,19 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:bluetoothpinterapp/feature/print_out/bloc/cubit.dart';
+import 'package:bluetoothpinterapp/feature/print_out/bloc/event.dart';
 import 'package:bluetoothpinterapp/product/constant/icon.dart';
 import 'package:bluetoothpinterapp/product/core/base/helper/button_control.dart';
 import 'package:bluetoothpinterapp/product/extension/dynamic_extensions.dart';
 import 'package:bluetoothpinterapp/product/util/base_utility.dart';
 import 'package:bluetoothpinterapp/product/widget/text_widget/body_medium_text.dart';
 import 'package:bluetoothpinterapp/product/widget/text_widget/title_large_text.dart';
+import 'package:bluetoothpinterapp/product/widget/text_widget/title_medium_text.dart';
+import 'package:bluetoothpinterapp/product/widget/widget/normaltextfield_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../widget/button_widget.dart';
 
@@ -217,6 +222,100 @@ class CodeNoahDialogs {
             child: CircularProgressIndicator(
               strokeWidth: 6,
               strokeCap: StrokeCap.round,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<T?> showCreatorAlert<T extends Object?>(
+    String title,
+    DynamicViewExtensions dynamicViewExtensions,
+    Function()? funcOne,
+    String btnText,
+    TextEditingController controller,
+    TextEditingController secondController,
+    String hintText,
+    String secondHintText,
+    bool explanationStatus,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        titlePadding: PaddingSizedsUtility.all(
+          PaddingSizedsUtility.hightPaddingValue,
+        ),
+        contentPadding: PaddingSizedsUtility.horizontal(
+          PaddingSizedsUtility.normalPaddingValue,
+        ),
+        backgroundColor: Colors.white,
+        title: Column(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.close,
+                  color: Theme.of(context).colorScheme.outline,
+                  size: IconSizedsUtility.normalSize,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: TitleMediumBlackBoldText(
+                text: title,
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ],
+        ),
+        content: SizedBox(
+          height: dynamicViewExtensions.dynamicHeight(context, 0.2),
+          child: Column(
+            children: <Widget>[
+              NormalTextFieldWidget(
+                controller: controller,
+                hintText: hintText,
+                explanationStatus: explanationStatus,
+                onChanged: (value) {
+                  context.read<PrintOutBloc>().add(ProductTitleEvent(value));
+                },
+                isValidator: true,
+                enabled: true,
+                isLabelText: false,
+                dynamicViewExtensions: dynamicViewExtensions,
+              ),
+              NumberTextFieldWidget(
+                controller: secondController,
+                hintText: secondHintText,
+                onChanged: (value) {
+                  context.read<PrintOutBloc>().add(ProductPriceEvent(value));
+                },
+                isLabelText: false,
+                dynamicViewExtensions: dynamicViewExtensions,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          SizedBox(
+            height: dynamicViewExtensions.dynamicHeight(
+              context,
+              0.08,
+            ),
+            child: GestureDetector(
+              onTap: funcOne,
+              child: CustomButtonWidget(
+                dynamicViewExtensions: dynamicViewExtensions,
+                text: btnText,
+                func: funcOne,
+                btnStatus: ButtonTypes.primaryColorButton,
+              ),
             ),
           ),
         ],
