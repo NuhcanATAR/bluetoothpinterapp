@@ -1,6 +1,8 @@
 import 'package:bluetoothpinterapp/feature/print_out/bloc/event.dart';
 import 'package:bluetoothpinterapp/feature/print_out/bloc/state.dart';
+import 'package:bluetoothpinterapp/product/core/base/helper/show_dialog.dart';
 import 'package:bluetoothpinterapp/product/model/product_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PrintOutBloc extends Bloc<PrintOutEvent, PrintOutState> {
@@ -27,7 +29,7 @@ class PrintOutBloc extends Bloc<PrintOutEvent, PrintOutState> {
       removeProduct(event.index, emit);
     });
 
-    on<PrintOutFuncEvent>(printOut);
+    on<PrintOutProductAddFuncEvent>(productAddFunc);
   }
 
   void addProduct(AddProductEvent event, Emitter<PrintOutState> emit) {
@@ -38,6 +40,7 @@ class PrintOutBloc extends Bloc<PrintOutEvent, PrintOutState> {
       state.copyWith(
         productList: updatedProductList,
         message: 'Ürün Eklendi!',
+        isProductAdded: true,
       ),
     );
   }
@@ -55,8 +58,25 @@ class PrintOutBloc extends Bloc<PrintOutEvent, PrintOutState> {
     }
   }
 
-  Future<void> printOut(
-    PrintOutFuncEvent event,
+  void productAddFunc(
+    PrintOutProductAddFuncEvent event,
     Emitter<PrintOutState> emit,
-  ) async {}
+  ) {
+    if (event.productNameController.text.isNotEmpty &&
+        event.productPriceController.text.isNotEmpty) {
+      final productModel = ProductModel(
+        event.productNameController.text,
+        int.parse(event.productPriceController.text),
+      );
+      event.context.read<PrintOutBloc>().add(AddProductEvent(productModel));
+      event.productNameController.clear();
+      event.productPriceController.clear();
+      Navigator.pop(event.context);
+    } else {
+      CodeNoahDialogs(event.context).showFlush(
+        type: SnackType.warning,
+        message: 'Ürün Bilgisi Eklemediniz!',
+      );
+    }
+  }
 }

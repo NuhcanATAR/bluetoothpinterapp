@@ -290,18 +290,15 @@ class CodeNoahDialogs {
                 isLabelText: false,
                 dynamicViewExtensions: dynamicViewExtensions,
               ),
-              NormalTextFieldWidget(
+              NumberTextFieldWidget(
                 controller: secondController,
                 hintText: secondHintText,
-                explanationStatus: explanationStatus,
                 onChanged: (value) {
                   context.read<PrintOutBloc>().add(ProductPriceEvent(value));
                 },
-                isValidator: true,
-                enabled: true,
                 isLabelText: false,
                 dynamicViewExtensions: dynamicViewExtensions,
-              )
+              ),
             ],
           ),
         ),

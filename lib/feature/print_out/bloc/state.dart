@@ -8,6 +8,7 @@ class PrintOutState extends Equatable {
   final String productPrice;
   final String message;
   final List<ProductModel> productList;
+  final bool isProductAdded;
 
   const PrintOutState({
     this.title = '',
@@ -16,6 +17,7 @@ class PrintOutState extends Equatable {
     this.productPrice = '',
     this.message = '',
     this.productList = const [],
+    this.isProductAdded = false,
   });
 
   PrintOutState copyWith({
@@ -25,6 +27,7 @@ class PrintOutState extends Equatable {
     String? productPrice,
     String? message,
     List<ProductModel>? productList,
+    bool? isProductAdded,
   }) {
     return PrintOutState(
       title: title ?? this.title,
@@ -33,12 +36,20 @@ class PrintOutState extends Equatable {
       productPrice: productPrice ?? this.productPrice,
       message: message ?? this.message,
       productList: productList ?? this.productList,
+      isProductAdded: isProductAdded ?? this.isProductAdded,
     );
   }
 
   @override
-  List<Object> get props =>
-      [title, explanation, productTitle, productPrice, message, productList];
+  List<Object> get props => [
+        title,
+        explanation,
+        productTitle,
+        productPrice,
+        message,
+        productList,
+        isProductAdded,
+      ];
 }
 
 class PrintOutLoadingState extends PrintOutState {}

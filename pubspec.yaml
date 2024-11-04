@@ -44,6 +44,7 @@ dependencies:
   flutter_blue_plus: ^1.32.12
   permission_handler: ^11.3.1
   esc_pos_utils: ^1.1.0
+  intl: ^0.18.1
 
   # utility
   flutter_svg: ^2.0.10+1

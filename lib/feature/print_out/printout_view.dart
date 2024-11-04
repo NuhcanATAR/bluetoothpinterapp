@@ -2,8 +2,8 @@ import 'package:bluetoothpinterapp/feature/print_out/bloc/cubit.dart';
 import 'package:bluetoothpinterapp/feature/print_out/bloc/event.dart';
 import 'package:bluetoothpinterapp/feature/print_out/bloc/state.dart';
 import 'package:bluetoothpinterapp/feature/print_out/printout_viewmodel.dart';
+import 'package:bluetoothpinterapp/feature/printers/bloc/cubit.dart';
 import 'package:bluetoothpinterapp/product/core/base/helper/button_control.dart';
-import 'package:bluetoothpinterapp/product/core/base/helper/show_dialog.dart';
 import 'package:bluetoothpinterapp/product/util/base_utility.dart';
 import 'package:bluetoothpinterapp/product/widget/button_widget.dart';
 import 'package:bluetoothpinterapp/product/widget/text_widget/body_medium_text.dart';
@@ -32,9 +32,7 @@ class _PrintOutViewState extends PrintOutViewModel {
         ),
       ),
       body: BlocConsumer<PrintOutBloc, PrintOutState>(
-        listener: (context, state) {
-          productRemoveListener(context, state);
-        },
+        listener: productRemoveListener,
         builder: (context, state) {
           return Form(
             child: Padding(
@@ -50,7 +48,7 @@ class _PrintOutViewState extends PrintOutViewModel {
                   // product form
                   buildProductFormWidget(state),
                   // print button
-                  buildPrintButtonWidget,
+                  buildPrintButtonWidget(state),
                 ],
               ),
             ),
@@ -95,19 +93,7 @@ class _PrintOutViewState extends PrintOutViewModel {
           CustomButtonWidget(
             dynamicViewExtensions: dynamicViewExtensions,
             text: 'Ürün Ekle',
-            func: () {
-              CodeNoahDialogs(context).showCreatorAlert(
-                'Ürün Ekle',
-                dynamicViewExtensions,
-                () {},
-                'KAYDET',
-                productNameController,
-                productPriceController,
-                'Ürün Adı',
-                'Ürün Fiyat',
-                false,
-              );
-            },
+            func: () => productAddFunc(),
             btnStatus: ButtonTypes.borderPrimaryColorButton,
           ),
           // product list
@@ -152,10 +138,15 @@ class _PrintOutViewState extends PrintOutViewModel {
       );
 
   // print button
-  Widget get buildPrintButtonWidget => CustomButtonWidget(
-        dynamicViewExtensions: dynamicViewExtensions,
-        text: 'YAZDIR',
-        func: () {},
-        btnStatus: ButtonTypes.primaryColorButton,
+  Widget buildPrintButtonWidget(PrintOutState printOutState) =>
+      BlocBuilder<PrintersCubit, PrintersState>(
+        builder: (context, state) {
+          return CustomButtonWidget(
+            dynamicViewExtensions: dynamicViewExtensions,
+            text: 'YAZDIR',
+            func: () => printOutFunc(printOutState, state),
+            btnStatus: ButtonTypes.primaryColorButton,
+          );
+        },
       );
 }

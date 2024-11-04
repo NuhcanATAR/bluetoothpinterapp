@@ -1,5 +1,6 @@
 import 'package:bluetoothpinterapp/product/model/product_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class PrintOutEvent extends Equatable {
   const PrintOutEvent();
@@ -62,10 +63,14 @@ class RemoveProductEvent extends PrintOutEvent {
   List<Object> get props => [index];
 }
 
-class PrintOutFuncEvent extends PrintOutEvent {
-  final String title;
-  final String explanation;
-  final List<ProductModel> products;
+class PrintOutProductAddFuncEvent extends PrintOutEvent {
+  final TextEditingController productNameController;
+  final TextEditingController productPriceController;
+  final BuildContext context;
 
-  const PrintOutFuncEvent(this.title, this.explanation, this.products);
+  const PrintOutProductAddFuncEvent(
+    this.productNameController,
+    this.productPriceController,
+    this.context,
+  );
 }
