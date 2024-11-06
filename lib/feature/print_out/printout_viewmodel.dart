@@ -8,17 +8,17 @@ import 'package:bluetoothpinterapp/feature/print_out/bloc/mixin.dart';
 import 'package:bluetoothpinterapp/feature/print_out/bloc/state.dart';
 import 'package:bluetoothpinterapp/feature/print_out/printout_view.dart';
 import 'package:bluetoothpinterapp/feature/printers/bloc/cubit.dart';
-import 'package:bluetoothpinterapp/product/constant/logo.dart';
+// import 'package:bluetoothpinterapp/product/constant/logo.dart';
 import 'package:bluetoothpinterapp/product/core/base/base_state/base_state.dart';
 import 'package:bluetoothpinterapp/product/core/base/helper/show_dialog.dart';
 import 'package:bluetoothpinterapp/product/model/product_model.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+// import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:image/image.dart' as img;
+// import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 
 abstract class PrintOutViewModel extends BaseState<PrintOutView>
@@ -274,14 +274,15 @@ abstract class PrintOutViewModel extends BaseState<PrintOutView>
     bytes += generator.feed(1);
 
     // logo
-    final ByteData data =
-        await rootBundle.load(AppLogoConstants.appLogoSecondPrimaryColor.toPng);
-    final Uint8List imageBytes = data.buffer.asUint8List();
-    final img.Image? logo = img.decodeImage(imageBytes);
-    if (logo != null) {
-      final img.Image resizedLogo = img.copyResize(logo, width: 200);
-      bytes += generator.imageRaster(resizedLogo);
-    }
+    // TODO: You can use it to insert images in the output
+    // final ByteData data =
+    //     await rootBundle.load(AppLogoConstants.appLogoSecondPrimaryColor.toPng);
+    // final Uint8List imageBytes = data.buffer.asUint8List();
+    // final img.Image? logo = img.decodeImage(imageBytes);
+    // if (logo != null) {
+    //   final img.Image resizedLogo = img.copyResize(logo, width: 200);
+    //   bytes += generator.imageRaster(resizedLogo);
+    // }
 
     bytes += generator.feed(1);
 
